@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class CombatController : MonoBehaviour
 {
+    [Header("Type d'ennemi (si ce n'est pas le Player)")]
+    public int pointsBonusSiEnnemiSpecial = 0; 
+    
      [Header("État")]
     public bool estVivant = true;
 
@@ -75,7 +78,12 @@ public class CombatController : MonoBehaviour
         }
         else
         {
-            // L'ennemi meurt pour de bon : on fait apparaître l'œuf, puis on détruit vraiment l'objet
+            // L'ennemi meurt : on ajoute les points
+            if (ScoreManager.instance != null)
+            {
+                ScoreManager.instance.AjouterPointsEnnemi(pointsBonusSiEnnemiSpecial);
+            }
+
             if (prefabOeuf != null)
             {
                 Instantiate(prefabOeuf, transform.position, Quaternion.identity);

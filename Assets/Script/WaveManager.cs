@@ -3,6 +3,11 @@ using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
+    [Header("Ennemi bonus")]
+    public GameObject prefabEnemyBonus;
+    [Range(0f, 1f)]
+    public float chanceEnnemiBonus = 0.2f;
+    
     [Header("Réglages des vagues")]
     public GameObject prefabEnemy;
     public Transform[] pointsDeSpawn;      // endroits où les ennemis peuvent apparaître
@@ -47,10 +52,16 @@ public class WaveManager : MonoBehaviour
 
     void SpawnUnEnnemi()
     {
-        // On choisit un point de spawn au hasard parmi ceux disponibles
         Transform pointDeSpawn = pointsDeSpawn[Random.Range(0, pointsDeSpawn.Length)];
 
-        GameObject nouvelEnnemi = Instantiate(prefabEnemy, pointDeSpawn.position, Quaternion.identity);
+        // On choisit si c'est un ennemi normal ou bonus
+        GameObject prefabAUtiliser = prefabEnemy;
+        if (prefabEnemyBonus != null && Random.value < chanceEnnemiBonus)
+        {
+            prefabAUtiliser = prefabEnemyBonus;
+        }
+
+        GameObject nouvelEnnemi = Instantiate(prefabAUtiliser, pointDeSpawn.position, Quaternion.identity);
         ennemisVivants.Add(nouvelEnnemi);
     }
 }

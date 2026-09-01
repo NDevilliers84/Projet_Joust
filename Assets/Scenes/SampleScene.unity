@@ -171,6 +171,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &29118032
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 29118034}
+  - component: {fileID: 29118033}
+  m_Layer: 0
+  m_Name: ScoreManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &29118033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 29118032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92715b1a9d646734e88aff1fa8413ef0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  scoreActuel: 0
+  pointsParEnnemi: 500
+  pointsParOeufRamasse: 250
+  delaiMaxEntreCombos: 3
+  bonusParNiveauDeCombo: 100
+--- !u!4 &29118034
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 29118032}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -10.41595, y: 2.54736, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2496,6 +2545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c8e8a1f118bc0c41885fc80f59d0fcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombatController
+  pointsBonusSiEnnemiSpecial: 0
   estVivant: 1
   estLePlayer: 1
   nombreDeVies: 3
@@ -2513,3 +2563,4 @@ SceneRoots:
   - {fileID: 1842132294}
   - {fileID: 1008561238}
   - {fileID: 1407002381}
+  - {fileID: 29118034}

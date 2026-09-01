@@ -28,7 +28,12 @@ public class RespawnEnemy : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Œuf ramassé ! Ennemi éliminé pour de bon.");
+
+            if (ScoreManager.instance != null)
+            {
+                ScoreManager.instance.AjouterPoints(ScoreManager.instance.pointsParOeufRamasse);
+            }
+
             Destroy(gameObject);
         }
     }
