@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class CombatController : MonoBehaviour
 {
+    [Header("UI")]
+    public UIManager uiManager;
+    
     [Header("Type d'ennemi (si ce n'est pas le Player)")]
     public int pointsBonusSiEnnemiSpecial = 0; 
     
@@ -22,6 +25,10 @@ public class CombatController : MonoBehaviour
     {
         // On mémorise la position d'origine, pour savoir où réapparaître
         positionDeDepart = transform.position;
+        if (estLePlayer && uiManager != null)
+        {
+            uiManager.MettreAJourVies(nombreDeVies);
+        }
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -66,6 +73,10 @@ public class CombatController : MonoBehaviour
             gameObject.SetActive(false);
 
             nombreDeVies--;
+            if (uiManager != null)
+            {
+                uiManager.MettreAJourVies(nombreDeVies);
+            }
 
             if (nombreDeVies > 0)
             {
