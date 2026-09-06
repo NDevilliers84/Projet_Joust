@@ -85,6 +85,11 @@ public class CombatController : MonoBehaviour
             else
             {
                 Debug.Log("Game Over ! Plus de vies.");
+                
+                if (GameManager.instance != null)
+                {
+                    GameManager.instance.DeclencherGameOver();
+                }
             }
         }
         else
