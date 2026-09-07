@@ -6,11 +6,15 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    [Header("Références UI")]
+    [Header("Références UI - Game Over")]
     public GameObject panelGameOver;
     public TextMeshProUGUI texteScoreFinal;
 
+    [Header("Références UI - Main Menu")]
+    public GameObject panelMainMenu;
+
     private bool enGameOver = false;
+    private bool enMainMenu = true;
 
     void Awake()
     {
@@ -24,11 +28,36 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        // Le jeu démarre en pause, sur le menu principal
+        Time.timeScale = 0f;
+        panelMainMenu.SetActive(true);
+    }
+
     void Update()
     {
-        if (enGameOver && Input.GetKeyDown(KeyCode.Return))
+        if (enMainMenu && Input.GetKeyDown(KeyCode.Return))
+        {
+            TenterDeCommencer();
+        }
+        else if (enGameOver && Input.GetKeyDown(KeyCode.Return))
         {
             TenterDeRejouer();
+        }
+    }
+
+    void TenterDeCommencer()
+    {
+        if (CoinManager.instance != null && CoinManager.instance.DepenserUnCredit())
+        {
+            enMainMenu = false;
+            panelMainMenu.SetActive(false);
+            Time.timeScale = 1f; // le jeu démarre vraiment
+        }
+        else
+        {
+            Debug.Log("Pas assez de crédits ! Insère une pièce (Tab).");
         }
     }
 

@@ -1,21 +1,28 @@
+using System.Collections;
 using UnityEngine;
 
 public class CombatController : MonoBehaviour
 {
-    [Header("UI")]
-    public UIManager uiManager;
-    
+    [Header("Invincibilité après réapparition")]
+    public float dureeInvincibilite = 2f;
+    public float vitesseClignotement = 0.15f;
+
+    private bool estInvincible = false;
+    private SpriteRenderer spriteRenderer;
+
+    [Header("UI")] public UIManager uiManager;
+
     [Header("Type d'ennemi (si ce n'est pas le Player)")]
-    public int pointsBonusSiEnnemiSpecial = 0; 
-    
-     [Header("État")]
-    public bool estVivant = true;
+    public int pointsBonusSiEnnemiSpecial = 0;
+
+    [Header("État")] public bool estVivant = true;
 
     [Header("Vies (uniquement pour le Player)")]
-    public bool estLePlayer = false;   // coche cette case dans l'Inspector pour le Player
+    public bool estLePlayer = false; // coche cette case dans l'Inspector pour le Player
+
     public int nombreDeVies = 3;
     public float delaiAvantReapparition = 2f;
-    
+
     [Header("Œuf (uniquement pour l'Enemy)")]
     public GameObject prefabOeuf;
 
@@ -25,6 +32,7 @@ public class CombatController : MonoBehaviour
     {
         // On mémorise la position d'origine, pour savoir où réapparaître
         positionDeDepart = transform.position;
+        spriteRenderer = GetComponent<SpriteRenderer>();
         if (estLePlayer && uiManager != null)
         {
             uiManager.MettreAJourVies(nombreDeVies);
@@ -33,6 +41,12 @@ public class CombatController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        // Si je suis invincible, je ne déclenche aucun duel
+        if (estInvincible)
+        {
+            return;
+        }
+
         CombatController autrePersonnage = collision.gameObject.GetComponent<CombatController>();
 
         if (autrePersonnage == null || !autrePersonnage.estVivant || !estVivant)
@@ -40,8 +54,6 @@ public class CombatController : MonoBehaviour
             return;
         }
 
-        // Un duel n'a lieu que si l'un des deux est le Player
-        // (deux ennemis qui se touchent ne se battent pas entre eux)
         if (!estLePlayer && !autrePersonnage.estLePlayer)
         {
             return;
@@ -85,7 +97,7 @@ public class CombatController : MonoBehaviour
             else
             {
                 Debug.Log("Game Over ! Plus de vies.");
-                
+
                 if (GameManager.instance != null)
                 {
                     GameManager.instance.DeclencherGameOver();
@@ -111,13 +123,32 @@ public class CombatController : MonoBehaviour
 
     void Reapparaitre()
     {
-        // On replace le player à sa position de départ
         transform.position = positionDeDepart;
 
-        // On réactive tout
         estVivant = true;
         gameObject.SetActive(true);
 
         Debug.Log("Le player réapparaît ! Vies restantes : " + nombreDeVies);
+
+        estInvincible = true;
+        StartCoroutine(ClignoterPendantInvincibilite());
+
+        IEnumerator ClignoterPendantInvincibilite()
+        {
+            float tempsEcoule = 0f;
+
+            while (tempsEcoule < dureeInvincibilite)
+            {
+                // On inverse la visibilité du sprite à chaque intervalle
+                spriteRenderer.enabled = !spriteRenderer.enabled;
+
+                yield return new WaitForSeconds(vitesseClignotement);
+                tempsEcoule += vitesseClignotement;
+            }
+
+            // On s'assure que le sprite est bien visible à la fin
+            spriteRenderer.enabled = true;
+            estInvincible = false;
+        }
     }
 }
