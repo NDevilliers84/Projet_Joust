@@ -3,7 +3,7 @@ using UnityEngine;
 public class RespawnEnemy : MonoBehaviour
 {
     [Header("Réglages")] public float tempsAvantEclosion = 5f;
-    public float delaiAvantRamassable = 0.5f; // délai avant de pouvoir ramasser l'œuf
+    public float delaiAvantRamassable = 0.5f;
     public GameObject prefabEnemy;
 
     private bool estRamassable = false;

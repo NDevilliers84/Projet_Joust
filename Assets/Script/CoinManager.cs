@@ -30,7 +30,6 @@ public class CoinManager : MonoBehaviour
 
     void Update()
     {
-        // Tab pour insérer une pièce
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             InsererPiece();
@@ -50,10 +49,10 @@ public class CoinManager : MonoBehaviour
         {
             credits--;
             MettreAJourTexteCredits();
-            return true; // le crédit a bien été dépensé
+            return true; 
         }
 
-        return false; // pas assez de crédits
+        return false; 
     }
 
     void MettreAJourTexteCredits()

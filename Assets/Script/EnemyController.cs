@@ -5,7 +5,7 @@ public class EnemyController : MonoBehaviour
     [Header("Réglages du mouvement")]
     public float vitesseDeplacement = 3f;
     public float intervalleChangementDirection = 2f;
-    public float vitesseDeRotation = 3f;   // vitesse à laquelle l'ennemi tourne vers sa nouvelle direction
+    public float vitesseDeRotation = 3f;   
 
     [Header("Poursuite du player")]
     [Range(0f, 1f)]
@@ -43,8 +43,7 @@ public class EnemyController : MonoBehaviour
             ChoisirNouvelleDirection();
             timerChangementDirection = 0f;
         }
-
-        // On tourne progressivement vers la direction cible, au lieu de basculer instantanément
+        
         direction = Vector2.Lerp(direction, directionCible, vitesseDeRotation * Time.deltaTime).normalized;
 
         rb.linearVelocity = direction * vitesseDeplacement;
@@ -86,9 +85,7 @@ public class EnemyController : MonoBehaviour
         if (collision.gameObject.CompareTag("Wall") || collision.gameObject.CompareTag("Enemy"))
         {
             Vector2 normaleCollision = collision.GetContact(0).normal;
-
-            // Au lieu d'un reflet parfait, on choisit une nouvelle direction cible
-            // qui s'éloigne de la surface, mélangée à un peu d'aléatoire pour rester naturel
+            
             float x = Random.Range(-1f, 1f);
             float y = Random.Range(-1f, 1f);
             Vector2 nouvelleDirectionAleatoire = new Vector2(x, y).normalized;

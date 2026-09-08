@@ -30,7 +30,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        // Le jeu démarre en pause, sur le menu principal
         Time.timeScale = 0f;
         panelMainMenu.SetActive(true);
     }
@@ -53,7 +52,7 @@ public class GameManager : MonoBehaviour
         {
             enMainMenu = false;
             panelMainMenu.SetActive(false);
-            Time.timeScale = 1f; // le jeu démarre vraiment
+            Time.timeScale = 1f; 
         }
         else
         {

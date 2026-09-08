@@ -12,8 +12,8 @@ public class ScoreManager : MonoBehaviour
     public int pointsParOeufRamasse = 250;
 
     [Header("Combo bonus")]
-    public float delaiMaxEntreCombos = 3f;   // temps max entre deux kills pour garder le combo
-    public int bonusParNiveauDeCombo = 100;  // points supplémentaires par niveau de combo
+    public float delaiMaxEntreCombos = 3f;   
+    public int bonusParNiveauDeCombo = 100;  
 
     private int comboActuel = 0;
     private float dernierKillTemps = -999f;

@@ -10,7 +10,7 @@ public class WaveManager : MonoBehaviour
     
     [Header("Réglages des vagues")]
     public GameObject prefabEnemy;
-    public Transform[] pointsDeSpawn;      // endroits où les ennemis peuvent apparaître
+    public Transform[] pointsDeSpawn;      
     public int ennemisVagueDepart = 3;
     public float delaiEntreVagues = 3f;
 
@@ -24,14 +24,14 @@ public class WaveManager : MonoBehaviour
 
     void Update()
     {
-        // On nettoie la liste des ennemis détruits (mangés par le null après Destroy)
+        
         ennemisVivants.RemoveAll(ennemi => ennemi == null);
 
-        // Si tous les ennemis de la vague sont morts, on prépare la suivante
+        
         if (ennemisVivants.Count == 0)
         {
             Invoke(nameof(DemarrerNouvelleVague), delaiEntreVagues);
-            enabled = false; // on évite de rappeler Invoke plusieurs fois pendant l'attente
+            enabled = false; 
         }
     }
 
@@ -47,14 +47,14 @@ public class WaveManager : MonoBehaviour
             SpawnUnEnnemi();
         }
 
-        enabled = true; // on réactive Update pour surveiller cette nouvelle vague
+        enabled = true; 
     }
 
     void SpawnUnEnnemi()
     {
         Transform pointDeSpawn = pointsDeSpawn[Random.Range(0, pointsDeSpawn.Length)];
 
-        // On choisit si c'est un ennemi normal ou bonus
+        
         GameObject prefabAUtiliser = prefabEnemy;
         if (prefabEnemyBonus != null && Random.value < chanceEnnemiBonus)
         {

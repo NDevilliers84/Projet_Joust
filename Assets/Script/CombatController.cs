@@ -18,7 +18,7 @@ public class CombatController : MonoBehaviour
     [Header("État")] public bool estVivant = true;
 
     [Header("Vies (uniquement pour le Player)")]
-    public bool estLePlayer = false; // coche cette case dans l'Inspector pour le Player
+    public bool estLePlayer = false; 
 
     public int nombreDeVies = 3;
     public float delaiAvantReapparition = 2f;
@@ -30,7 +30,6 @@ public class CombatController : MonoBehaviour
 
     void Start()
     {
-        // On mémorise la position d'origine, pour savoir où réapparaître
         positionDeDepart = transform.position;
         spriteRenderer = GetComponent<SpriteRenderer>();
         if (estLePlayer && uiManager != null)
@@ -41,7 +40,6 @@ public class CombatController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // Si je suis invincible, je ne déclenche aucun duel
         if (estInvincible)
         {
             return;
@@ -81,7 +79,6 @@ public class CombatController : MonoBehaviour
 
         if (estLePlayer)
         {
-            // Le player se désactive temporairement, il va réapparaître
             gameObject.SetActive(false);
 
             nombreDeVies--;
@@ -106,7 +103,6 @@ public class CombatController : MonoBehaviour
         }
         else
         {
-            // L'ennemi meurt : on ajoute les points
             if (ScoreManager.instance != null)
             {
                 ScoreManager.instance.AjouterPointsEnnemi(pointsBonusSiEnnemiSpecial);
@@ -139,14 +135,12 @@ public class CombatController : MonoBehaviour
 
             while (tempsEcoule < dureeInvincibilite)
             {
-                // On inverse la visibilité du sprite à chaque intervalle
                 spriteRenderer.enabled = !spriteRenderer.enabled;
 
                 yield return new WaitForSeconds(vitesseClignotement);
                 tempsEcoule += vitesseClignotement;
             }
-
-            // On s'assure que le sprite est bien visible à la fin
+            
             spriteRenderer.enabled = true;
             estInvincible = false;
         }
